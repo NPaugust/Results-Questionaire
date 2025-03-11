@@ -48,6 +48,7 @@ interface OblastData {
   name: string;
   ratings: number[];
   overall: number;
+  totalAssessments: number;
 }
 
 interface MapProps {
@@ -65,27 +66,26 @@ export default function Map_oblast({ oblastData }: MapProps) {
   const [dimensions, setDimensions] = useState({ width: 800, height: 480 });
 
   // Создаём объект zoom для управления масштабом
- // Создаём объект zoom для управления масштабом
-const zoom = useMemo(
-  () =>
-    d3
-      .zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1, 8]) // Ограничиваем масштаб от 1x до 8x
-      .touchable(true) // Включаем поддержку сенсорных событий
-      .wheelDelta((event) => -event.deltaY * 0.002)
-      .on("start", () => {
-        // Сбрасываем флаг перемещения при начале зума
-      })
-      .on("zoom", (event) => {
-        d3.select(svgRef.current)
-          .select(".regions")
-          .attr("transform", event.transform);
-      })
-      .on("end", () => {
-        // Ничего не делаем, просто завершаем событие
-      }),
-  []
-);
+  const zoom = useMemo(
+    () =>
+      d3
+        .zoom<SVGSVGElement, unknown>()
+        .scaleExtent([1, 8]) // Ограничиваем масштаб от 1x до 8x
+        .touchable(true) // Включаем поддержку сенсорных событий
+        .wheelDelta((event) => -event.deltaY * 0.002)
+        .on("start", () => {
+          // Сбрасываем флаг перемещения при начале зума
+        })
+        .on("zoom", (event) => {
+          d3.select(svgRef.current)
+            .select(".regions")
+            .attr("transform", event.transform);
+        })
+        .on("end", () => {
+          // Ничего не делаем, просто завершаем событие
+        }),
+    []
+  );
   const oblastMapping: OblastMapping = useMemo(
     () => ({
       Biškek: "Город Бишкек",
@@ -141,13 +141,124 @@ const zoom = useMemo(
       .attr("height", height)
       .attr("viewBox", `0 0 ${width} ${height}`);
 
+    // Центрируем карту
     const projection = d3
       .geoMercator()
-      .center([74, 41.5])
-      .scale(width * 4)
+      .center([75, 41.5]) // Немного скорректированные координаты центра
+      .scale(width * 3.5)
       .translate([width / 2, height / 2]);
 
     const path = d3.geoPath().projection(projection);
+
+    // Добавляем статистику
+    const stats = svg
+      .append("g")
+      .attr("class", "stats")
+      .attr("transform", `translate(${width - 1200}, 20)`);
+
+    stats
+      .append("rect")
+      .attr("width", 200)
+      .attr("height", 80)
+      .attr("fill", "white")
+      .attr("rx", 8)
+      .attr("opacity", 0.9)
+      .attr("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))");
+
+    // Вычисляем среднюю оценку
+    const averageRating = oblastData.reduce((acc, curr) => acc + curr.overall, 0) / oblastData.length;
+
+    // Вычисляем общее количество отзывов
+    const totalAssessments = oblastData.reduce((acc, curr) => acc + curr.totalAssessments, 0);
+
+    // Добавляем текст статистики
+    stats
+      .append("text")
+      .attr("x", 10)
+      .attr("y", 30)
+      .attr("fill", "#374151")
+      .attr("font-size", "12px")
+      .text(`Средняя оценка областей: ${averageRating.toFixed(1)}`);
+
+    stats
+      .append("text")
+      .attr("x", 10)
+      .attr("y", 55)
+      .attr("fill", "#374151")
+      .attr("font-size", "12px")
+      .text(`Общее количество оценок: ${totalAssessments}`);
+
+    // Улучшенная легенда
+    const hasData = oblastData && oblastData.length > 0;
+    if (hasData) {
+      const legend = svg
+        .append("g")
+        .attr("class", "legend")
+        .attr("transform", `translate(${width - 200}, 20)`);
+
+      legend
+        .append("rect")
+        .attr("width", 180)
+        .attr("height", 220)
+        .attr("fill", "white")
+        .attr("rx", 8)
+        .attr("opacity", 0.9)
+        .attr("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))");
+
+      legend
+        .append("text")
+        .attr("x", 10)
+        .attr("y", 25)
+        .attr("font-size", "12px")
+        .attr("font-weight", "600")
+        .attr("fill", "#374151")
+        .text("Шкала оценок  по цвету");
+
+      const legendData = [
+        { color: "#66C266", label: "4.5 - 5.0" },
+        { color: "#B4D330", label: "4.0 - 4.4" },
+        { color: "#FFC04D", label: "3.5 - 3.9" },
+        { color: "#F4A460", label: "3.0 - 3.4" },
+        { color: "#ff8300", label: "2.0 - 2.9" },
+        { color: "#ff620d", label: "1.5 - 2.0" },
+        { color: "#fa5d5d", label: "1.0 - 1.5" },
+        { color: "#640202", label: "0.5 - 1.0" },
+      ];
+
+      legend
+        .selectAll(".legend-item")
+        .data(legendData)
+        .join("g")
+        .attr("class", "legend-item")
+        .attr("transform", (d, i) => `translate(10, ${i * 22 + 35})`)
+        .call((g) => {
+          g.append("rect")
+            .attr("width", 15)
+            .attr("height", 15)
+            .attr("rx", 3)
+            .attr("fill", (d) => d.color);
+          g.append("text")
+            .attr("x", 25)
+            .attr("y", 12)
+            .attr("font-size", "12px")
+            .attr("fill", "#4B5563")
+            .text((d) => d.label);
+        });
+    }
+
+    // Добавляем CSS для анимации областей
+    const style = document.createElement('style');
+    style.textContent = `
+      .region-path {
+        transition: all 0.2s ease-in-out;
+      }
+      .region-path:hover {
+        filter: brightness(0.9);
+        transform: scale(1.01);
+        cursor: pointer;
+      }
+    `;
+    document.head.appendChild(style);
 
     // Создаём группу для регионов
     const regionsGroup = svg.append("g").attr("class", "regions");
@@ -160,8 +271,6 @@ const zoom = useMemo(
       [0, 0], // Минимальные координаты (верхний левый угол)
       [width, height], // Максимальные координаты (нижний правый угол)
     ]);
-
-    const hasData = oblastData && oblastData.length > 0;
 
     // Рисуем области
     regionsGroup
@@ -264,54 +373,16 @@ const zoom = useMemo(
         });
     }
 
-    // Добавляем легенду только если данные есть
-    if (hasData) {
-      const legend = svg
-        .append("g")
-        .attr("class", "legend")
-        .attr("transform", `translate(20, ${height - 650})`);
-
-      const legendData = [
-        { color: "#66C266", label: "4.5 - 5.0" },
-        { color: "#B4D330", label: "4.0 - 4.4" },
-        { color: "#FFC04D", label: "3.5 - 3.9" },
-        { color: "#F4A460", label: "3.0 - 3.4" },
-        { color: "#ff8300", label: "2.0 - 2.9" },
-        { color: "#ff620d", label: "1.5 - 2.0" },
-        { color: "#fa5d5d", label: "1.0 - 1.5" },
-        { color: "#640202", label: "0.5 - 1.0" },
-      ];
-
-      legend
-        .selectAll(".legend-item")
-        .data(legendData)
-        .join("g")
-        .attr("class", "legend-item")
-        .attr("transform", (d, i) => `translate(0, ${i * 20})`)
-        .call((g) => {
-          g.append("rect")
-            .attr("width", 15)
-            .attr("height", 15)
-            .attr("rx", 2)
-            .attr("fill", (d) => d.color);
-          g.append("text")
-            .attr("x", 25)
-            .attr("y", 12)
-            .attr("font-size", "12px")
-            .attr("fill", "#666")
-            .text((d) => d.label);
-        });
-    }
-
-    // Сбрасываем масштаб при изменении размера окна
     return () => {
       svg.call(zoom.transform, d3.zoomIdentity);
+      style.remove(); // Удаляем стили при размонтировании
     };
   }, [oblastData, getOblastRating, getColor, zoom]);
 
   return (
     <div ref={containerRef} className="relative w-full">
       <svg ref={svgRef} className="w-full h-auto"></svg>
+      
       {/* Кнопки зума */}
       <div className="absolute bottom-4 right-4 flex flex-col gap-5 z-30 ContainerZoomButtons">
         <button

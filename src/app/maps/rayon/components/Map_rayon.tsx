@@ -223,7 +223,7 @@ export default function Map_rayon({
 
     const projection = d3
       .geoMercator()
-      .center([74.5, 41.5])
+      .center([74.8, 41.4])
       .scale(4500)
       .translate([1200 / 2, 600 / 2]);
 

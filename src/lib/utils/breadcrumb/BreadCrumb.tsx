@@ -11,7 +11,7 @@ interface BreadcrumbProps {
   onCourtBackClick?: () => void; // Возврат к списку судов
   onRegionBackClick?: () => void; // Возврат к списку регионов
   showHome?: boolean; // Управление отображением второго "Главная" (HeaderNavThree/HeaderNavFour)
-  headerKey?: "HeaderNavThree" | "HeaderNavFour"; // Новый проп для выбора ключа перевода
+  headerKey?: "HeaderNavThree"   | "HeaderNavFour"; // Новый проп для выбора ключа перевода
 }
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({

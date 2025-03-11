@@ -105,9 +105,7 @@ export function useRemarks() {
         );
       }
 
-      if (user.role === "Председатель 2 инстанции") {
-        return false;
-      }
+
 
       // Default condition
       return (

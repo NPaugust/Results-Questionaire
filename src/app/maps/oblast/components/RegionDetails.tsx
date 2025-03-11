@@ -184,6 +184,7 @@ type SortField =
   | "office"
   | "building"
   | "count"
+  | "name"
   | null;
 type SortDirection = "asc" | "desc" | null;
 
@@ -294,9 +295,10 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
     setSelectedCourtId,
   } = useSurveyData();
 
-  const [sortField, setSortField] = useState<SortField>(null);
-  const [sortDirection, setSortDirection] = useState<SortDirection>(null);
+  const [sortField, setSortField] = useState<SortField>("name");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -356,6 +358,10 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
         case "overall":
           aValue = a.overall;
           bValue = b.overall;
+          break;
+        case "name":
+          aValue = a.name.localeCompare(b.name, 'ru', {sensitivity: 'base'});
+          bValue = b.name.localeCompare(a.name, 'ru', {sensitivity: 'base'});
           break;
         default:
           return 0;
@@ -788,6 +794,28 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
     };
   }, [selectedRegion, regionName]);
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    if (!value) {
+      setIsSearchOpen(false);
+    }
+  };
+
+  const handleSearchIconClick = () => {
+    setIsSearchOpen(!isSearchOpen);
+    if (isSearchOpen) {
+      setSearchQuery('');
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Escape') {
+      setIsSearchOpen(false);
+      setSearchQuery('');
+    }
+  };
+
   return (
     <>
       {selectedCourtId ? (
@@ -818,32 +846,6 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
               {renderRegionMap()}
               <div className="bg-white rounded-xl shadow-sm border border-gray-100">
                 <div className="overflow-x-auto">
-                  <div className="relative w-full max-w-[13rem] my-2 ml-4 RegionDetailsSearch">
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Поиск суда"
-                      className="w-full pl-10 pr-4 py-2.5 text-sm text-gray-900 bg-white rounded-lg focus:outline-none transition-all duration-200 ease-in-out placeholder-gray-500"
-                    />
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                      <svg
-                        className="w-5 h-5 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-
                   {/* Таблица для десктопа (≥ 640px) */}
                   <div className="hidden sm:block overflow-x-auto">
                     <table className="w-full border-collapse">
@@ -852,8 +854,46 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
                           <th className="px-3 py-2.5 text-center text-xs font-medium text-gray-500 uppercase bg-gray-50 border-r border-gray-200">
                             №
                           </th>
-                          <th className="px-3 py-2.5 text-left text-xs font-medium text-gray-500 uppercase bg-gray-50 border-r border-gray-200">
-                            Наименование суда
+                          <th className="px-3 py-2.5 text-left text-xs font-medium text-gray-500 uppercase bg-gray-50 border-r border-gray-200" style={{ width: '20%', minWidth: '250px' }}>
+                            <div className="flex items-center justify-between">
+                              <span className="truncate mr-2">НАИМЕНОВАНИЕ СУДА</span>
+                              <div className={`flex items-center overflow-hidden transition-all duration-500 ease-in-out ${
+                                isSearchOpen ? 'w-36' : 'w-8'
+                              }`}>
+                                <div className={`flex-grow transition-all duration-500 ease-in-out ${
+                                  isSearchOpen ? 'opacity-100 w-full' : 'opacity-0 w-0'
+                                }`}>
+                                  <input
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={handleSearchChange}
+                                    onKeyDown={handleKeyDown}
+                                    placeholder="Поиск суда"
+                                    className="w-full px-2 py-1.5 text-xs text-gray-900 bg-white border border-gray-300 rounded-lg outline-none"
+                                    autoFocus={isSearchOpen}
+                                  />
+                                </div>
+                                <div 
+                                  className="cursor-pointer p-1.5 hover:bg-gray-100 rounded-full flex-shrink-0"
+                                  onClick={handleSearchIconClick}
+                                >
+                                  <svg
+                                    className="w-4 h-4 text-gray-500"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                    />
+                                  </svg>
+                                </div>
+                              </div>
+                            </div>
                           </th>
                           <th
                             className="px-3 py-2.5 text-center text-xs font-medium text-gray-500 uppercase bg-gray-50 border-r border-gray-200 cursor-pointer"
@@ -914,7 +954,7 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
                             onClick={() => handleSort("count")}
                           >
                             <div className="flex items-center justify-between px-2">
-                              <span>Количество отзывов</span>
+                              <span>Количество оценок</span>
                             </div>
                           </th>
                         </tr>

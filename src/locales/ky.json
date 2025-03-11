@@ -5,15 +5,11 @@
     "HeaderNavFour": "Райондук соттор",
     "HeaderNavExit": "Чыгуу",
     "HeaderNavRemarks": "Эскертүүлөр жана сунуштар",
-
-
     "DiagrammOne": "Жалпы көрсөткүчтөр",
     "DiagrammOneTotal": "Жооптордун саны:",
-
     "DiagrammTwo": "Эскертүүлөр жана сунуштар",
     "DiagrammTwoTotal": "Жооптордун саны:",
     "DiagrammTwoButton": "Бардык эскертүүлөр жана сунуштар",
-
     "DiagrammThree": "Респонденттердин категориялары",
     "DiagrammFour": "Демографиялык көрсөткүчтөр",
     "DiagrammFive": "Трафиктин булагы",
@@ -26,7 +22,6 @@
     "DiagrammTwelve": "Жыйналыштын белгиленген убакытта башталышы",
     "DiagrammThirteen": "Канцелярияны баалоо",
     "DiagrammFourteen": "Имараттын жеткиликтүүлүгүн баалоо",
-
     "OblastMapTittle": "Облустук соттор боюнча баалар",
     "OblastMapLinkOne": "Аймактар боюнча орточо баалар",
     "OblastMapLinkTwo": "Эскертүүлөр жана сунуштар",
@@ -38,5 +33,38 @@
     "OblastMapProcess": "Иштетүү",
     "OblastMapStaff": "Кызматкерлер",
     "OblastMapJudge": "Судья",
-    "OblastMapRatings": "Баалардын саны"
+    "OblastMapRatings": "Баалардын саны",
+
+    "Regional_Courts_Breadcrumbs_Main": "Башкы",
+    "Regional_Courts_MainName": "Аймактар боюнча баалоо",
+    "Regional_Courts_Table_NameRegion": "Облустун аталышы",
+    "Regional_Courts_Table_Overall": "Жалпы баа",
+    "Regional_Courts_Table_Build": "Имарат",
+    "Regional_Courts_Table_Chancellery": "Кеңсе",
+    "Regional_Courts_Table_Procces": "Иштетүү",
+    "Regional_Courts_Table_Staff": "Кызматкерлер",
+    "Regional_Courts_Table_Judge": "Судья",
+    "Regional_Courts_Table_Number of reviews": "Сын-пикирлердин саны",
+    "Regional_Courts_Table_Search": "Сот издөө",
+
+    "RemarksLogic_Remarks": "Эскертүүлөр жана сунуштар",
+    "RemarksLogic_Chairman": "Төрага",
+    "RemarksLogic_Message": "Жарандан билдирүү",
+    "RemarksLogic_Actions": "Аракеттер",
+    "RemarksLogic_Reply": "Көрүлгөн чаралар",
+    "RemarksLogic_Comment": "Комментарий жазуу",
+    "RemarksLogic_Court": "Сот",
+    "RemarksLogic_ModalTitle": "Комментарий кошуу",
+    "RemarksLogic_ModalMessage": "Эскертүү: ",
+    "RemarksLogic_ModalButton": "Сактоо",
+    "RemarksLogic_ModalClose": "Айынуу",
+    "RemarksLogic_NoRemarks": "Эскертүүлөр жана сунуштар жок",
+    "RemarksLogic_NoRemarksMessage": "Суд үчүн эскертүүлөр жана сунуштар жок.",
+    "RemarksLogic_Back": "Артка",
+    "RemarksLogic_Next": "Кийинки",
+    "RemarksLogic_Error": "Ката",
+    "RemarksLogic_Loading": "Маалымат Жүктөө...",
+    "RemarksLogic_Error_Adding": "Эскертүү жазылышында үлгүлөр",
+    "RemarksLogic_ModalPlaceholder": "Сиздин эскертүүңүздү жазыңыз..."
+
 }

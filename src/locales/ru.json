@@ -38,5 +38,40 @@
     "OblastMapProcess": "Процесс",
     "OblastMapStaff": "Сотрудники",
     "OblastMapJudge": "Судья",
-    "OblastMapRatings": "Кол-во оценок"
+    "OblastMapRatings": "Кол-во оценок",
+
+    "Regional_Courts_Breadcrumbs_Main": "Главная",
+    "Regional_Courts_MainName": "Оценки по областям",
+    
+    "Regional_Courts_Table_NameRegion": "Наименование области",
+    "Regional_Courts_Table_Overall": "Общая оценка",
+    "Regional_Courts_Table_Build": "Здание",
+    "Regional_Courts_Table_Chancellery": "Канцелярия",
+    "Regional_Courts_Table_Procces": "Процесс",
+    "Regional_Courts_Table_Staff": "Сотрудники",
+    "Regional_Courts_Table_Judge": "Судья",
+    "Regional_Courts_Table_Number of reviews": "Количество отзывов",
+    "Regional_Courts_Table_Search": "Поиск суда",
+
+    "RemarksLogic_Remarks": "Замечания и предложения",
+    "RemarksLogic_Chairman": "Председатель",
+    "RemarksLogic_Message": "Сообщение от гражданина",
+    "RemarksLogic_Actions": "Действия",
+    "RemarksLogic_Reply": "Принятые меры",
+    "RemarksLogic_Comment": "Комментировать",
+    "RemarksLogic_Court": "Суд",
+    "RemarksLogic_ModalTitle": "Добавить комментарий",
+    "RemarksLogic_ModalMessage":"Замечание: ",
+    "RemarksLogic_ModalButton":"Сохранить",
+    "RemarksLogic_ModalClose":"Отмена",
+    "RemarksLogic_NoRemarks":"Нет доступных замечаний",
+    "RemarksLogic_NoRemarksMessage":"Для вашего суда пока не поступило ни одного замечания.",
+    "RemarksLogic_Back":"Назад",
+    "RemarksLogic_Next":"Вперед",
+    "RemarksLogic_Error":"Ошибка",
+    "RemarksLogic_Loading":"Загрузка данных...",
+    "RemarksLogic_Error_Adding":"Ошибка при добавлении комментария",
+    "RemarksLogic_ModalPlaceholder":"Введите ваш комментарий..."
+
+    
 }

@@ -1060,7 +1060,7 @@ export default function Evaluations({
                           font: {
                             weight: "bold", // Шрифт метки
                           },
-                          formatter: (value: number) => `${value}%`, // Форматируем метки как проценты
+                          formatter: (value: number) => `${Math.abs(value)}%`, // Убираем минус в ageGenderData эту строку
                         },
                         tooltip: {
                           callbacks: {
