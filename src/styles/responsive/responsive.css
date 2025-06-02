@@ -1,0 +1,245 @@
+@media (max-width: 1280px) {
+  .layout {
+    @apply max-w-[1000px];
+  }
+
+  .HeaderNav {
+    @apply text-sm;
+  }
+}
+
+@media (max-width: 1150px) {
+  .HeaderNav {
+    @apply text-center px-2;
+  }
+  .HeaderUser_Exit {
+    @apply px-2;
+  }
+  .HeaderUser {
+    @apply w-[3rem];
+  }
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    @apply max-w-[880px];
+  }
+}
+
+@media (max-width: 910px) {
+  .layout {
+    @apply max-w-[700px];
+  }
+
+  .EvalutionCols {
+    @apply grid-cols-1;
+  }
+}
+
+@media (max-width: 760px) {
+  .layout {
+    @apply max-w-[600px];
+  }
+
+  .EvalutionCols {
+    @apply grid-cols-1;
+  }
+}
+
+@media (max-width: 640px) {
+  .layout {
+    @apply max-w-[500px];
+  }
+
+  .EvalutionCols {
+    @apply grid-cols-1;
+  }
+
+  .HeaderHeight {
+    @apply h-14 px-3;
+  }
+
+  .HeaderUser_Exit {
+    @apply gap-0 text-xs;
+  }
+
+  .HeaderUserName {
+    @apply text-sm;
+  }
+
+  .CgProfile {
+    @apply w-4 h-4;
+  }
+
+  .LogoutButton {
+    @apply w-4 h-4;
+  }
+
+  .Logo_1024{
+    @apply w-8 h-8
+  }
+}
+
+@media (max-width: 530px) {
+  .layout {
+    @apply max-w-[430px];
+  }
+
+  .EvalutionCols {
+    @apply grid-cols-1;
+  }
+
+  .DiagrammTwoComments {
+    @apply text-sm;
+  }
+
+  .DiagrammTwoCommentsBtn {
+    @apply text-sm mt-0;
+  }
+
+  .Dates{
+    @apply text-sm
+  }
+
+  .DatesInputText{
+    @apply w-[4.8rem]
+  }
+
+  .DatesQuarter_Month{
+    @apply text-sm
+  }
+
+  .SideBarWindow{
+    @apply w-72
+  }
+
+  .Calendar{
+    @apply gap-1
+  }
+}
+
+@media (max-width: 470px) {
+  .layout {
+    @apply max-w-[380px];
+  }
+
+  .EvalutionCols {
+    @apply grid-cols-1;
+  }
+
+  .DiagrammOne {
+    @apply text-lg w-[20rem];
+  }
+  .DiagrammOneTotal {
+    @apply text-sm;
+  }
+
+  .DiagrammTwo {
+    @apply text-lg  w-[20rem];
+  }
+  .DiagrammTwoTotal {
+    @apply text-sm text-end;
+  }
+
+  .AgeGenderButtons {
+    @apply text-[0.80rem];
+  }
+
+  .DiagrammElevenName {
+    @apply text-lg;
+  }
+
+  .ProgressBar {
+    @apply h-6;
+  }
+
+  .DiagrammSevenProgress {
+    @apply text-sm;
+  }
+
+  .DiagrammNineProgress {
+    @apply text-sm;
+  }
+
+  .DiagrammTenProgress {
+    @apply text-sm mb-8;
+  }
+
+  .DiagrammThirteenProgress {
+    @apply text-sm mb-4;
+  }
+
+  .DiagrammFourteenProgress {
+    @apply text-sm;
+  }
+
+  .HeaderNavExitText{
+    display: none;
+  }
+}
+
+@media (max-width: 440px) {
+  .Logo_1024{
+   display: none
+  }
+  .layout {
+    @apply max-w-[350px];
+  }
+
+  .AgeGenderButtons {
+    @apply text-[0.64rem];
+  }
+  .ProgressBar {
+    @apply h-6;
+  }
+
+  .EvaluationsCategoryRespond{
+    @apply w-[250px]
+  }
+
+  .EvaluationsAudio{
+    @apply w-[250px]
+  }
+
+  .EvaluationsTime{
+    @apply w-[250px]
+  }
+
+  .DiagrammThreeName {
+    @apply text-lg;
+  }
+
+  .DiagrammFourName {
+    @apply text-lg;
+  }
+
+  .DiagrammFiveName {
+    @apply text-lg;
+  }
+
+  .DiagrammSixName {
+    @apply text-lg;
+  }
+
+  .DiagrammEightName {
+    @apply text-lg;
+  }
+
+  .RadarHeight{
+    @apply h-[300px]
+  }
+}
+
+@media (max-width: 385px) {
+  .layout {
+    @apply max-w-[320px] 
+  }
+
+  .AgeGenderButtons {
+    @apply text-[0.58rem];
+  }
+
+  .DiagrammElevenName {
+    @apply text-base;
+  }
+}

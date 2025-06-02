@@ -1,0 +1,113 @@
+@media (max-width: 1280px) {
+    .District {
+      @apply max-w-[1000px] mx-auto;
+    }
+  }
+
+@media (max-width: 1035px) {
+  .Courts {
+    @apply max-w-[900px]  
+  }
+}
+@media (max-width: 980px) {
+  .Courts {
+    @apply max-w-[800px]  
+  }
+}
+@media (max-width: 835px) {
+  .Courts {
+    @apply max-w-[700px]  
+  }
+}
+@media (max-width: 730px) {
+  .Courts {
+    @apply max-w-[600px]  
+  }
+  .ZoomButtons{
+    @apply w-5 h-5 
+  }
+}
+@media (max-width: 640px) {
+  .Courts {
+    @apply max-w-[500px]  
+  }
+
+.ContainerZoomButtons{
+    @apply gap-3
+}
+
+  .ZoomButtons{
+    @apply w-5 h-5 
+  }
+  .RegionDetailsMap{
+    @apply h-[250px]
+  }
+  .DistrictDetailsSearch{
+    @apply mb-0 ml-1
+  }
+
+  .DistrictEvaluationsCourtName{
+    @apply text-2xl
+  }
+
+  .DatesInputText{
+    @apply w-[4.7rem]
+  }
+  
+}
+@media (max-width: 530px) {
+  .Courts {
+    @apply max-w-[400px]  mr-6 
+  }
+  .RegionName{
+    @apply text-sm
+  }
+  .BreadCrumbText{
+    @apply text-xs
+  }
+  .ContainerZoomButtons{
+    @apply gap-2
+}
+  .ZoomButtons{
+    @apply w-3 h-3 
+  }
+  .DistrictName{
+    @apply text-[0.85rem] mt-0
+  }
+  .DistrictBreadCrumbText{
+    @apply text-[0.65rem]
+  }
+
+  .Dates{
+    @apply text-sm
+  }
+
+  .DatesInputText{
+    @apply w-[4rem]
+  }
+
+  .DatesQuarter_Month{
+    @apply text-[0.80rem]
+  }
+}
+
+@media (max-width: 440px) {
+    .BreadCrumbText{
+        @apply text-[0.65rem]
+      }
+}
+
+@media (max-width: 385px) {
+  .Courts {
+    @apply max-w-[300px]  
+  }
+  .DistrictName{
+    @apply text-xs
+  }
+  .BreadCrumbText{
+    @apply text-[0.65rem]
+  }
+  .ZoomButtons{
+    @apply w-2 h-2 
+  }
+}

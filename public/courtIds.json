@@ -1,0 +1,12 @@
+{
+  "courts": [
+    { "court_id": 2, "court": "Баткенский областной суд", "slug": "Batken" },
+    { "court_id": 11, "court": "Таласский областной суд", "slug": "Talas" },
+    { "court_id": 16, "court": "Нарынский областной суд", "slug": "Naryn" },
+    { "court_id": 24, "court": "Жалал-Абадский областной суд", "slug": "Djalal-Abad" },
+    { "court_id": 38, "court": "Ошский областной суд", "slug": "Osh" },
+    { "court_id": 47, "court": "Иссык-кульский областной суд", "slug": "Issyk-Kyl" },
+    { "court_id": 55, "court": "Чуйский областной суд", "slug": "Chyi" },
+    { "court_id": 66, "court": "Бишкекский городской суд", "slug": "Bishkek" }
+  ]
+}
