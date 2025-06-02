@@ -18,6 +18,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import TableSkeleton, {
   MobileCardsSkeleton,
 } from "@/lib/utils/SkeletonLoader/TableSkeleton";
+import { TableSearch } from "@/components/SearchFilter/TableSearch";
 
 interface Assessment {
   aspect: string;
@@ -158,13 +159,14 @@ export default function Courts() {
   }, []);
 
   const handleCourtClick = (court: Court) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("courtName", court.name);
+      localStorage.setItem("courtNameId", court.id.toString());
+    }
+    
     setCourtName(court.name);
     setCourtNameId(court.id.toString());
-    if (typeof window !== "undefined") {
-      localStorage.setItem("courtNameId", court.id.toString());
-      localStorage.setItem("courtName", court.name);
-      localStorage.setItem("selectedCourtName", court.name);
-    }
+    
     router.push(`/Home/first-instance/${court.id}/rating`);
   };
 
@@ -194,6 +196,13 @@ export default function Courts() {
     };
 
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem("courtName");
+      localStorage.removeItem("courtNameId");
+    }
   }, []);
 
   const handleSort = (field: SortField) => {
@@ -264,36 +273,20 @@ export default function Courts() {
     });
   }, [filteredCourts, sortField, sortDirection]);
 
-  const debouncedSearch = useCallback(
-    debounce((query: string) => {
-      setSearchQuery(query);
-      if (!query.trim()) {
-        setFilteredCourts(courts);
-      } else {
-        setFilteredCourts(
-          courts.filter((court) =>
-            court.name.toLowerCase().includes(query.toLowerCase())
-          )
-        );
-      }
-    }, 300),
-    [courts]
-  );
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    debouncedSearch(value);
-    if (!value) {
-      setIsSearchOpen(false);
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    
+    if (query.trim() === "") {
+      setFilteredCourts(courts);
+      return;
     }
-  };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Escape") {
-      setIsSearchOpen(false);
-      debouncedSearch("");
-      (e.target as HTMLInputElement).value = "";
-    }
+    const filtered = courts.filter(
+      (court) =>
+        court.name.toLowerCase().includes(query.toLowerCase()) ||
+        court.overall_assessment.toString().includes(query)
+    );
+    setFilteredCourts(filtered);
   };
 
   return (
@@ -314,7 +307,7 @@ export default function Courts() {
         <Map
           selectedRayon={null}
           onSelectRayon={handleCourtClick}
-          courts={courts}
+          courts={filteredCourts}
         />
       </div>
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 mt-8">
@@ -339,57 +332,11 @@ export default function Courts() {
                         className="px-3 py-2.5 text-left text-xs font-medium text-gray-500 uppercase bg-gray-50 border-r border-gray-200"
                         style={{ width: "20%", minWidth: "250px" }}
                       >
-                        <div className="flex items-center justify-between">
-                          <span className="truncate mr-2">
-                            {getTranslation(
-                              "Regional_Courts_Table_NameCourt",
-                              language
-                            )}
-                          </span>
-                          <div className="relative">
-                            <div
-                              className={`flex items-center overflow-hidden transition-all duration-500 ease-in-out ${
-                                isSearchOpen ? "w-36" : "w-8"
-                              }`}
-                            >
-                              <div
-                                className={`flex-grow transition-all duration-500 ease-in-out ${
-                                  isSearchOpen
-                                    ? "opacity-100 w-full"
-                                    : "opacity-0 w-0"
-                                }`}
-                              >
-                                <input
-                                  type="text"
-                                  onChange={handleSearchChange}
-                                  onKeyDown={handleKeyDown}
-                                  placeholder="Поиск суда"
-                                  className="w-full px-2 py-1.5 text-xs text-gray-900 bg-white border border-gray-300 rounded-lg outline-none"
-                                  autoFocus={isSearchOpen}
-                                />
-                              </div>
-                              <div
-                                className="cursor-pointer p-1.5 hover:bg-gray-100 rounded-full flex-shrink-0"
-                                onClick={() => setIsSearchOpen(!isSearchOpen)}
-                              >
-                                <svg
-                                  className="w-4 h-4 text-gray-500"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                  />
-                                </svg>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        <TableSearch 
+                          columnName={getTranslation("Regional_Courts_Table_NameCourt", language)}
+                          onSearch={handleSearch}
+                          placeholder={getTranslation("Regional_Courts_Table_Search", language)}
+                        />
                       </th>
                       <th
                         className="px-3 py-2.5 text-center text-xs font-medium text-gray-500 uppercase bg-gray-50 border-r border-gray-200 cursor-pointer"
